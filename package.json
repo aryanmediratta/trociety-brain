@@ -18,14 +18,18 @@
   },
   "homepage": "https://github.com/zrthxn/trociety-brain#readme",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "bwip-js": "^1.7.1",
+    "cookie-parser": "^1.4.4",
     "express": "^4.16.4",
+    "express-fileupload": "^1.1.1-alpha.3",
     "express-handlebars": "^3.0.1",
     "firebase": "^5.8.4",
     "fs": "0.0.1-security",
     "googleapis": "^37.2.0",
     "http": "0.0.0",
     "https": "^1.0.0",
+    "path": "^0.12.7",
     "querystring": "^0.2.0",
     "request": "^2.88.0",
     "vhost": "^3.0.2"
