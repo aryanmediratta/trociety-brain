@@ -1,0 +1,33 @@
+{
+  "name": "trociety-brain",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zrthxn/trociety-brain.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zrthxn/trociety-brain/issues"
+  },
+  "homepage": "https://github.com/zrthxn/trociety-brain#readme",
+  "dependencies": {
+    "bwip-js": "^1.7.1",
+    "express": "^4.16.4",
+    "express-handlebars": "^3.0.1",
+    "firebase": "^5.8.4",
+    "fs": "0.0.1-security",
+    "googleapis": "^37.2.0",
+    "http": "0.0.0",
+    "https": "^1.0.0",
+    "querystring": "^0.2.0",
+    "request": "^2.88.0",
+    "vhost": "^3.0.2"
+  }
+}
