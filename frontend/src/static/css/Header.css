@@ -72,27 +72,11 @@ header .container {
     opacity: 0;
     z-index: 10000;
     max-width: 300px;
-    background: linear-gradient(#ffd800, #ff9e00);
+    background: linear-gradient(#0051ff, #00ffdd);
     transition: all 0.25s ease;
 } #sidebar-toggle:checked ~ .sidebar {
     opacity: 1;
     width: 60%;
-} 
-
-/* ACCENT */
-.sidebar .accent {
-    position: absolute;
-    width: 0;
-    height: 15em;
-    top: 6em;
-    left: 0;
-    z-index: -1;
-    opacity: 0;
-    /* background-color: var(--yellow); */
-    transition: all 0.75s ease;
-}  #sidebar-toggle:checked ~ .sidebar .accent {
-    width: 3.25em;
-    opacity: 1;
 }
 
 /* SIDEBAR SHADOW */
@@ -149,15 +133,15 @@ header .sidebar-nav {
 
 header ul li a {
     text-decoration: none;
-    color: #000;
-    font-weight: 600;
+    color: #fff;
+    font-weight: 400;
 } header a::after {
     content: '';
     display: block;
     position: absolute;
     width: 0;
     height: 1.5px;
-    top: 50%;
+    top: 112.5%;
     transition: all 250ms ease;
     background-color: #000;
 } @media (min-width:800px) {

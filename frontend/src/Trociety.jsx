@@ -2,14 +2,14 @@ import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import './Trociety.css'
 
-import Header from './components/partials/Header'
-import Footer from './components/partials/Footer'
+import Header from './pages/partials/Header'
+import Footer from './pages/partials/Footer'
 
-import Home from './components/Home'
-import About from './components/About'
-import Contact from './components/Contact'
-import Pricing from './components/Pricing'
-import Products from './components/Products'
+import Home from './pages/Home'
+import About from './pages/About'
+import Contact from './pages/Contact'
+import Pricing from './pages/Pricing'
+import Products from './pages/Products'
 
 class Trociety extends Component {
   render() {

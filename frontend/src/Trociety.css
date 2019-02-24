@@ -1,33 +1,231 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,200,300,400,500,600,800,900');
+
+:root {
+    --yellow: #ffee00;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+* {
+    box-sizing: border-box;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    animation: body 750ms ease;
+} @keyframes body {
+    from { opacity: 0 }
+    to { opacity: 1 }
+}
+*::-moz-selection, *::selection {
+    background: #ffee00;
 }
 
-.App-link {
-  color: #61dafb;
+section {
+    padding: 1em;
+    z-index: 0;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.container {
+    width: 100%;
+    padding: 1em;
+    margin: auto auto;
+    height: fit-content;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+} .container[class~="horizontal"] {
+    flex-direction: row;
+} @media(max-width: 600px) {
+    .container[class~="horizontal"] {
+        flex-direction: column;
+    }
+} .container[class~="center"] * {
+    margin-left: auto;
+    margin-right: auto;
+} .container[class~="fit"] {
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+    max-width: 1200px;
+}
+
+/* TYPOGRAPHY ========================================= TYPOGRAPHY  */
+
+/* Headings */
+h1 {
+    margin-bottom: 0.5em;
+    margin-top: 0;
+    font-size: 60px;
+    font-weight: 600;
+}
+h2 {
+    margin-bottom: 0.5em;
+    margin-top: 0;
+    font-size: 42px;
+    font-weight: 600;
+}
+h3 {
+    margin-bottom: 0.5em;
+    margin-top: 0;
+    font-size: 30px;
+    font-weight: 500;
+}
+h4 {
+    font-weight: 400;
+}
+h5 {
+    font-weight: 400;
+}
+h6 {
+    font-weight: 400;
+}
+
+/* Paragraphs */
+p {
+    font-size: 14px;
+    font-weight: 400;
+    margin: auto;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+} p[class~="left"] {
+    text-align: left;
+} p[class~="right"] {
+    text-align: right;
+} p[class~="justify"] {
+    text-align: justify;
+} @media (min-width: 600px) {
+    p {
+        max-width: 50%;
+    } p[class~="wide"] {
+        width: auto;
+        max-width: 90%;
+    }
+}
+
+/* Emphasis */
+em {
+    font-style: normal;
+    font-weight: 600;
+}
+
+/* Highlight */
+.highlight {
+    height: 100%;
+    background-color: var(--yellow);
+}
+
+/* BUTTONS ================================================ BUTTONS */
+
+.button {
+    margin: 1em;
+    width: 10em;
+    height: 4em;
+    background-color: transparent;
+    border: 1.5px solid #000;
+    border-radius: 4em;
+    transition: all 0.25s ease;
+} .button:focus {
+    outline: none;
+} .button:active {
+    background-color: #eee;
+}
+
+.solid[class~="button"] {
+    color: #fff;
+    background-color: #0051ff;
+    border: 1.5px solid #0051ff;
+} .solid[class~="button"]:active {
+    background-color: #1d1d1d;
+    border: 1.5px solid #1d1d1d;
+}
+
+/* GREEN Buttons */
+.green[class~="solid"] {
+    color: #fff;
+    background-color: #177400;
+    border: 1.5px solid #177400;
+} .green[class~="solid"]:active{
+    background-color: #125a00;
+    border: 1.5px solid #125a00;
+} .green:not([class~="solid"]) {
+    color: #177400;
+    background-color: transparent;
+    border: 1.5px solid #177400;
+} .green:not([class~="solid"]):active {
+    background-color: #eeffee;
+}
+
+/* RED Buttons */
+.red[class~="solid"] {
+    color: #fff;
+    background-color: #bd0000;
+    border: 1.5px solid #bd0000;
+} .red[class~="solid"]:active{
+    background-color: #990101;
+    border: 1.5px solid #990101;
+} .red:not([class~="solid"]) {
+    color: #bd0000;
+    background-color: transparent;
+    border: 1.5px solid #bd0000;
+} .red:not([class~="solid"]):active {
+    background-color: #ffeeee;
+}
+
+/* DISABLED Buttons */
+.button:disabled {
+    color: #fff;
+    background-color: #ddd;
+    border: 1.5px solid #ddd;
+}
+
+.small[class~="button"] {
+    margin: 0.5em;
+    width: 9em;
+    height: 3em;
+    font-size: 0.65em;
+}
+
+/* INPUTS ============================================= INPUTS */
+.textbox {
+    margin: 1em;
+    width: 20em;
+    padding: 1em;
+    font-size: 0.85em;
+    background-color: #fff;
+    transition: all 0.25s ease;
+    border: 1.5px solid #aaa;
+    border-radius: 0.5em;
+} .textbox:focus{
+    outline: none;
+    border: 1.5px solid #666;
+    background-color: #fff;
+} .textbox[class~="error"] {
+    color: #d60000;
+    border: 1.5px solid #d60000;
+} .textbox[class~="error"]::placeholder {
+    color: #d60000;
+}
+
+.dropdown {
+    margin: 1em;
+    max-width: 20em;
+    padding: 1em;
+    font-size: 0.85em;
+    background-color: #fff;
+    transition: all 0.2s ease;
+    border: 1.5px solid #aaa;
+    border-radius: 0.5em;
+} .dropdown:focus{
+    outline: none;
+    border: 1.5px solid #666;
+    background-color: #fff;
+} .dropdown option {
+    border: none;
 }
