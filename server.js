@@ -32,6 +32,7 @@ trociety.use(vhost('www.' +  __domain, frontend))
 trociety.use(vhost('api.' +  __domain, api))
 
 // ====================================================================================== //
+// ====================================================================================== //
 
 frontend.use(cookieParser(ServerConfig.clientKey, {}))
 frontend.use(bodyParser.json())
@@ -39,14 +40,29 @@ frontend.use(bodyParser.urlencoded({ extended: true }))
 frontend.use(express.json())
 frontend.use(express.urlencoded({ extended: true }))
 
-// Static Served Directories
-// frontend.use('/static', express.static( path.join(__dirname, 'frontend', 'static') ))
+// Statically Served Directories
+frontend.use('/static', express.static( path.join(__dirname, 'frontend', 'src', 'static') ))
+
+// Frontend ---------------------- Frontend //
+// ======================================= //
+frontend.get('/', (req,res)=>{
+    res.sendFile( path.resolve(__dirname, 'frontend', 'build', 'index.html') )
+})
 
 // APIs ------------------------------ APIs //
 // ======================================= //
-
-api.get('/mon/', (req,res)=>{
-    res.sendStatus(200)
+api.get('/:func/', (req,res)=>{
+    var { func } = req.params
+    switch(func) {
+        case '_database':
+            res.sendStatus(200)
+            break
+        case '_mail':
+            break
+        default:
+            res.end()
+            break
+    }
 })
 
 api.post('', ()=>{
