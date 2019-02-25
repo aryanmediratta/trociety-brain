@@ -27,9 +27,8 @@ trociety.listen(PORT, ()=>{
     console.log('Listening')
 })
 
-trociety.use(vhost(__domain, homepage))
-trociety.use(vhost('www.' +  __domain, homepage))
-trociety.use(vhost('cdn.' +  __domain, cdn))
+trociety.use(vhost(__domain, frontend))
+trociety.use(vhost('www.' +  __domain, frontend))
 trociety.use(vhost('api.' +  __domain, api))
 
 // ====================================================================================== //
@@ -41,15 +40,15 @@ frontend.use(express.json())
 frontend.use(express.urlencoded({ extended: true }))
 
 // Static Served Directories
-frontend.use('/static', express.static( path.join(__dirname, 'frontend', 'static') ))
+// frontend.use('/static', express.static( path.join(__dirname, 'frontend', 'static') ))
 
-frontend.set('views', path.join(__dirname, 'frontend'))
-frontend.set('view engine', 'hbs')
-frontend.engine('hbs', hbs({
-    defaultLayout: 'main',
-    extname: 'hbs',
-    layoutsDir: __dirname + '/frontend/layouts',
-    partialsDir: [
-        __dirname + '/frontend/partials'
-    ]
-}))
+// APIs ------------------------------ APIs //
+// ======================================= //
+
+api.get('/mon/', (req,res)=>{
+    res.sendStatus(200)
+})
+
+api.post('', ()=>{
+    
+})
