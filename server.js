@@ -79,20 +79,23 @@ api.get('/', (req,res)=>{
 })
 
 api.post('/_validate/society', (req,res)=>{
-    let { society_key } = req.body
-    if(society_key!==undefined || society_key!==null) {
+    let { society_ref } = req.body
+    if(society_ref!==undefined || society_ref!==null) {
         Database.firestore.collection('society')
-        .where('sid', '==', society_key)
+        .where('ref', '==', society_ref)
         .limit(1)
         .get()
         .then((querySnapshot)=>{
             let society_data = querySnapshot.docs[0].data()
-            // Send email to admin
             res.json({ data: society_data })
         })
     } else {
         res.sendStatus(403)
     }
+})
+
+api.post('/_validate/user', (req,res)=>{
+
 })
 
 api.get('/:func/', (req,res)=>{
