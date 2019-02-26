@@ -89,6 +89,9 @@ api.post('/_validate/society', (req,res)=>{
             let society_data = querySnapshot.docs[0].data()
             res.json({ data: society_data })
         })
+        .catch(()=>{
+            res.sendStatus(404)
+        })
     } else {
         res.sendStatus(403)
     }
