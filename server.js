@@ -51,6 +51,23 @@ frontend.get('/', (req,res)=>{
 
 // APIs ------------------------------ APIs //
 // ======================================= //
+api.post('/_validate/society', (req,res)=>{
+    let { society_key } = req.body
+    if(society_key!==undefined || society_key!==null) {
+        Database.firestore.collection('society')
+        .where('sid', '==', society_key)
+        .limit(1)
+        .get()
+        .then((querySnapshot)=>{
+            let society_data = querySnapshot.docs[0].data()
+            // Send email to admin
+            res.json({ data: society_data })
+        })
+    } else {
+        res.sendStatus(403)
+    }
+})
+
 api.get('/:func/', (req,res)=>{
     var { func } = req.params
     switch(func) {

@@ -1,0 +1,45 @@
+{
+  "PORT": "3000",
+  "env": "dev",
+  "ServerState": "NORMAL",
+  "domain": "xtacy.org",
+  "csrfTokenName": "_xta_srf-tk:",
+  "csrfTokenNameKey": "_tk_nmk-del",
+  "clientKeyPlaintext": "cLi#ntK3y@xTacy&org",
+  "clientKey": "29e08c47ff8a12ad6885fcb1ca99568b0016c541c5657c7956b0a4159fc3c4f1",
+  "Sheets": {
+    "spreadsheets": {
+      "repository": "1G_yHB9loHd31zoEa1YHZvmiG731HdVRJHtSKfDSMUAI"
+    }
+  },
+  "Gmail": {
+    "username": "__required__",
+    "userId": "__required__"
+  },
+  "smsService": {
+    "apikey": "",
+    "senders": {
+
+    }
+  },
+  "payments": {
+    "env": "sandbox",
+    "sandbox": {
+      "API_KEY": "test_eac399e665246c6d7b6f21dc34a", 
+      "AUTH_TOKEN": "test_2e9abbeb69a1c515e5eaa6bd1dc" 
+    }, 
+    "live": {
+      "API_KEY": "",
+      "AUTH_TOKEN": ""
+    }
+  },
+  "firebaseClientAPIKey": "AIzaSyAd17pI-aG3Mx8x_HXNz4lQ7VWRWnSgy4E",
+  "firebaseServerAPIKey": "AIzaSyDvu4G7Z62WqJfb-aMwQa2YGOCGSTUnxtk",
+  "firebase": {
+    "authDomain": "xtacy-org.firebaseapp.com",
+    "databaseURL": "https://xtacy-org.firebaseio.com",
+    "projectId": "xtacy-org",
+    "storageBucket": "xtacy-org.appspot.com",
+    "messagingSenderId": "625260114530"
+  }
+}
