@@ -87,6 +87,7 @@ api.post('/_validate/society', (req,res)=>{
         .get()
         .then((querySnapshot)=>{
             let society_data = querySnapshot.docs[0].data()
+            console.log('Request Aayi')
             res.json({ data: society_data })
         })
     } else {
