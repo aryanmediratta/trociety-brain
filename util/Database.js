@@ -3,8 +3,7 @@ require('firebase/database');
 require('firebase/auth');
 require('firebase/firestore');
 
-var DatabaseConfig = require('../config.json').firebase;
-DatabaseConfig['apiKey'] = require('../config.json').firebaseServerAPIKey;
+const DatabaseConfig = require('../config.json').firebase;
 
 if (firebase.apps.length===0)
     firebase.initializeApp(DatabaseConfig)
