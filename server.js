@@ -86,12 +86,12 @@ api.post('/_validate/society', (req,res)=>{
         .limit(1)
         .get()
         .then((querySnapshot)=>{
-            let { sid, ref, name } = querySnapshot.docs[0].data()
+            let { sid, ref, society_name } = querySnapshot.docs[0].data()
             let hmac = crypto.createHmac('sha256', ServerConfig.clientKey).update(sid).digest('hex')
-            res.json({ 
+            res.json({
                 checksum: hmac,
                 data: { 
-                    sid: sid, ref: ref, name: name 
+                    sid: sid, ref: ref, society_name: society_name 
                 }
             })
         })
@@ -111,7 +111,7 @@ api.post('/_validate/user', (req,res)=>{
         .limit(1)
         .get()
         .then((querySnapshot)=>{
-            let user_data = querySnapshot.docs[0].data()
+            let { user_email, society_ref } = querySnapshot.docs[0].data()
             res.json({ data: user_data })
         })
         .catch(()=>{
