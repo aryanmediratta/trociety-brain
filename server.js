@@ -81,7 +81,7 @@ api.get('/', (req,res)=>{
 api.post('/_validate/society', (req,res)=>{
     let { society_ref } = req.body
     if(society_ref!==undefined && society_ref!==null) {
-        Database.firestore.collection('society')
+        Database.firestore.collection('societies')
         .where('ref', '==', society_ref)
         .limit(1)
         .get()
@@ -105,8 +105,8 @@ api.post('/_validate/user', (req,res)=>{
         .limit(1)
         .get()
         .then((querySnapshot)=>{
-            let society_data = querySnapshot.docs[0].data()
-            res.json({ data: society_data })
+            let user_data = querySnapshot.docs[0].data()
+            res.json({ data: user_data })
         })
         .catch(()=>{
             res.sendStatus(404)
