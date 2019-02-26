@@ -86,8 +86,14 @@ api.post('/_validate/society', (req,res)=>{
         .limit(1)
         .get()
         .then((querySnapshot)=>{
-            let society_data = querySnapshot.docs[0].data()
-            res.json({ data: society_data })
+            let { sid, ref, name } = querySnapshot.docs[0].data()
+            let hmac = crypto.createHmac('sha256', ServerConfig.clientKey).update(sid).digest('hex')
+            res.json({ 
+                checksum: hmac,
+                data: { 
+                    sid: sid, ref: ref, name: name 
+                }
+            })
         })
         .catch(()=>{
             res.sendStatus(404)
@@ -100,8 +106,8 @@ api.post('/_validate/society', (req,res)=>{
 api.post('/_validate/user', (req,res)=>{
     let { user_email } = req.body
     if(user_email!==undefined && user_email!==null) {
-        Database.firestore.collection('society')
-        .where('ref', '==', user_email)
+        Database.firestore.collection('users')
+        .where('email', '==', user_email)
         .limit(1)
         .get()
         .then((querySnapshot)=>{
