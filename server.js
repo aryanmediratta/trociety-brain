@@ -49,8 +49,23 @@ frontend.get('/', (req,res)=>{
     res.sendFile( path.resolve(__dirname, 'frontend', 'build', 'index.html') )
 })
 
+// frontend.post('/_register/society', (req,res)=>{
+//     let { name,
+//     ad_email,
+//     ad_phone,
+//     ad_name,
+//     sc_location,
+//     gates,
+//     vehicles,
+//     info } = req.body
+// })
+
 // APIs ------------------------------ APIs //
 // ======================================= //
+api.get('/', (req,res)=>{
+    res.sendStatus(200)
+})
+
 api.post('/_validate/society', (req,res)=>{
     let { society_key } = req.body
     if(society_key!==undefined || society_key!==null) {
@@ -80,8 +95,4 @@ api.get('/:func/', (req,res)=>{
             res.end()
             break
     }
-})
-
-api.post('', ()=>{
-    
 })

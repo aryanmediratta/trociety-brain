@@ -15,7 +15,6 @@ const database = firebase.database()
 exports.database = database
 
 const firestore = firebase.firestore()
-firestore.settings({ timestampsInSnapshots: true })
 exports.firestore = firestore
 
 /**

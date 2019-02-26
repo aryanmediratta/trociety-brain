@@ -13,6 +13,12 @@ header .container {
     position: relative;
 }
 
+.active {
+    position: fixed;
+    background: #fff;
+    /* Shadow */
+}
+
 /* ========================================== */
 
 .hamburger {
@@ -55,11 +61,13 @@ header .container {
 #sidebar-toggle:checked ~ .hamburger span::before {
 	bottom: 0;
 	transform: rotate(-45deg);
+	background: #fff;
 } #sidebar-toggle:checked ~ .hamburger span {
 	background: transparent;
 } #sidebar-toggle:checked ~ .hamburger span::after {
 	top: 0;
 	transform: rotate(45deg);
+	background: #fff;
 }
 
 /* SIDEBAR MENU --------------------- */
