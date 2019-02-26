@@ -31,6 +31,12 @@ trociety.use(vhost(__domain, frontend))
 trociety.use(vhost('www.' +  __domain, frontend))
 trociety.use(vhost('api.' +  __domain, api))
 
+trociety.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*")
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+    next()
+})
+
 // ====================================================================================== //
 // ====================================================================================== //
 
