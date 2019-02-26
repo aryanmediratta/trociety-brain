@@ -80,6 +80,7 @@ api.get('/', (req,res)=>{
 
 api.post('/_validate/society', (req,res)=>{
     let { society_ref } = req.body
+    console.log('REF', society_ref)
     if(society_ref!==undefined || society_ref!==null) {
         Database.firestore.collection('society')
         .where('ref', '==', society_ref)
