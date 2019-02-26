@@ -80,7 +80,6 @@ api.get('/', (req,res)=>{
 
 api.post('/_validate/society', (req,res)=>{
     let { society_ref } = req.body
-    console.log('REF', society_ref)
     if(society_ref!==undefined && society_ref!==null) {
         Database.firestore.collection('society')
         .where('ref', '==', society_ref)
@@ -88,7 +87,6 @@ api.post('/_validate/society', (req,res)=>{
         .get()
         .then((querySnapshot)=>{
             let society_data = querySnapshot.docs[0].data()
-            console.log('Request Aayi')
             res.json({ data: society_data })
         })
     } else {
@@ -97,7 +95,22 @@ api.post('/_validate/society', (req,res)=>{
 })
 
 api.post('/_validate/user', (req,res)=>{
-
+    let { user_email } = req.body
+    if(user_email!==undefined && user_email!==null) {
+        Database.firestore.collection('society')
+        .where('ref', '==', user_email)
+        .limit(1)
+        .get()
+        .then((querySnapshot)=>{
+            let society_data = querySnapshot.docs[0].data()
+            res.json({ data: society_data })
+        })
+        .catch(()=>{
+            res.sendStatus(404)
+        })
+    } else {
+        res.sendStatus(403)
+    }
 })
 
 api.get('/:func/', (req,res)=>{
