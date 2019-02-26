@@ -40,6 +40,12 @@ frontend.use(bodyParser.urlencoded({ extended: true }))
 frontend.use(express.json())
 frontend.use(express.urlencoded({ extended: true }))
 
+api.use(cookieParser(ServerConfig.clientKey, {}))
+api.use(bodyParser.json())
+api.use(bodyParser.urlencoded({ extended: true }))
+api.use(express.json())
+api.use(express.urlencoded({ extended: true }))
+
 // Statically Served Directories
 frontend.use('/static', express.static( path.join(__dirname, 'frontend', 'src', 'static') ))
 
