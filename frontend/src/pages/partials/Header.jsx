@@ -1,8 +1,19 @@
 import React, { Component } from 'react'
+import $ from 'jquery'
 
 import '../../static/css/Header.css'
 
 export default class Header extends Component {
+  componentDidMount() {
+    $(window).on("scroll", function() {
+      if($(window).scrollTop() > 50) {
+        $("header").addClass("active");
+      } else {
+        $("header").removeClass("active");
+      }
+    })
+  }
+
   render() {
     return (
       <header>

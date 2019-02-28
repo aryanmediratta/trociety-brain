@@ -1,0 +1,44 @@
+{
+  "PORT": "3000",
+  "env": "dev",
+  "ServerState": "NORMAL",
+  "domain": "trociety.zrthxn.com",
+  "csrfTokenName": "_xta_srf-tk:",
+  "csrfTokenNameKey": "_tk_nmk-del",
+  "clientKeyPlaintext": "cLi#ntK3y@xTacy&org",
+  "clientKey": "29e08c47ff8a12ad6885fcb1ca99568b0016c541c5657c7956b0a4159fc3c4f1",
+  "Sheets": {
+    "spreadsheets": {
+      "repository": "1G_yHB9loHd31zoEa1YHZvmiG731HdVRJHtSKfDSMUAI"
+    }
+  },
+  "Gmail": {
+    "username": "__required__",
+    "userId": "__required__"
+  },
+  "smsService": {
+    "apikey": "",
+    "senders": {
+
+    }
+  },
+  "payments": {
+    "env": "sandbox",
+    "sandbox": {
+      "API_KEY": "test_eac399e665246c6d7b6f21dc34a", 
+      "AUTH_TOKEN": "test_2e9abbeb69a1c515e5eaa6bd1dc" 
+    }, 
+    "live": {
+      "API_KEY": "",
+      "AUTH_TOKEN": ""
+    }
+  },
+  "firebase": {
+    "apiKey": "AIzaSyAoYxR-OW8F8Q1uUhlF3YM1dO_Pf7UB0BY",
+    "authDomain": "trociety-db.firebaseapp.com",
+    "databaseURL": "https://trociety-db.firebaseio.com",
+    "projectId": "trociety-db",
+    "storageBucket": "trociety-db.appspot.com",
+    "messagingSenderId": "244693699857"
+  }
+}

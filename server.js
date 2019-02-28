@@ -32,6 +32,7 @@ trociety.use(vhost('www.' +  __domain, frontend))
 trociety.use(vhost('api.' +  __domain, api))
 
 // ====================================================================================== //
+// ====================================================================================== //
 
 frontend.use(cookieParser(ServerConfig.clientKey, {}))
 frontend.use(bodyParser.json())
@@ -39,16 +40,165 @@ frontend.use(bodyParser.urlencoded({ extended: true }))
 frontend.use(express.json())
 frontend.use(express.urlencoded({ extended: true }))
 
-// Static Served Directories
-// frontend.use('/static', express.static( path.join(__dirname, 'frontend', 'static') ))
+api.use(cookieParser(ServerConfig.clientKey, {}))
+api.use(bodyParser.json())
+api.use(bodyParser.urlencoded({ extended: true }))
+api.use(express.json())
+api.use(express.urlencoded({ extended: true }))
+
+// Statically Served Directories
+frontend.use('/static', express.static( path.join(__dirname, 'frontend', 'src', 'static') ))
+
+// Frontend ---------------------- Frontend //
+// ======================================= //
+frontend.get('/', (req,res)=>{
+    res.sendFile( path.resolve(__dirname, 'frontend', 'build', 'index.html') )
+})
+
+// frontend.post('/_register/society', (req,res)=>{
+//     let { name,
+//     ad_email,
+//     ad_phone,
+//     ad_name,
+//     sc_location,
+//     gates,
+//     vehicles,
+//     info } = req.body
+// })
 
 // APIs ------------------------------ APIs //
 // ======================================= //
+api.use((req, res, next)=>{
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+    next()
+})
 
-api.get('/mon/', (req,res)=>{
+api.get('/', (req,res)=>{
     res.sendStatus(200)
 })
 
-api.post('', ()=>{
-    
+api.post('/_validate/society', (req,res)=>{
+    let { society_ref } = req.body
+    if(society_ref!==undefined && society_ref!==null) {
+        Database.firestore.collection('societies')
+        .where('ref', '==', society_ref)
+        .limit(1)
+        .get()
+        .then((querySnapshot)=>{
+            let { sid, ref, society_name } = querySnapshot.docs[0].data()
+            let hmac = crypto.createHmac('sha256', ServerConfig.clientKey).update(sid).digest('hex')
+            res.json({
+                checksum: hmac,
+                data: { 
+                    ref: ref, society_name: society_name 
+                }
+            })
+        })
+        .catch(()=>{
+            res.sendStatus(404)
+        })
+    } else {
+        res.sendStatus(403)
+    }
+})
+
+api.post('/_validate/user', (req,res)=>{
+    let { auth_user_email, society_ref } = req.body
+    if(auth_user_email!==undefined && auth_user_email!==null) {
+        Database.firestore.collection('users').doc(society_ref)
+        .collection('_users')
+        .where('email', '==', auth_user_email)
+        .limit(1)
+        .get()
+        .then((querySnapshot)=>{
+            let { user_email, society_ref, isValidated } = querySnapshot.docs[0].data()
+
+            // Get SID by S_REF
+            Database.firestore.collection('societies')
+            .where('ref', '==', society_ref)
+            .limit(1)
+            .get()
+            .then((_querySnapshot)=>{
+                let { sid } = _querySnapshot.docs[0].data()
+                if(!isValidated) {
+                    // Update validated stattus in the users collection
+                    Database.firestore.collection('users').doc(society_ref)
+                    .collection('_users')
+                    .where('email', '==', auth_user_email)
+                    .update({ isValidated: true })
+                    
+                    let gen_uid = ''
+                    // GENERATE  User ID
+                    gen_uid += '@' + society_ref
+
+                    // Add user to auth_users collection
+                    Database.firestore.collection('societies').doc(society_ref)
+                    .collection('auth_users')
+                    .doc(gen_uid)
+                    .set({
+                        uid: gen_uid,
+                        email: user_email,
+                        isValidated: true,
+                        validatedOn: Date.now()
+                    })
+                    .then(()=>{
+                        res.json({ 
+                            hmac: null,
+                            data: {
+                                sid: sid,
+                                uid: gen_uid,
+                                society_ref: society_ref, 
+                                isValidated: true
+                            } 
+                        })
+                    })
+                    .catch(()=>{
+                        res.sendStatus(500)
+                    })
+                } else {
+                    Database.firestore.collection('societies').doc(society_ref)
+                    .collection('auth_users')
+                    .where('email', '==', auth_user_email)
+                    .limit(1)
+                    .get()
+                    .then((__querySnapshot)=>{
+                        let { uid } = __querySnapshot.docs[0].data()
+                        res.json({ 
+                            hmac: null,
+                            data: {
+                                sid: sid,
+                                uid: uid,
+                                society_ref: society_ref,
+                                isValidated: true
+                            }
+                        })
+                    })
+                }
+            })
+            .catch(()=>{
+                res.json({ hmac: null, data: { isValidated: false } })
+            })
+        })
+        .catch(()=>{
+            res.sendStatus(404)
+            // OTP validation here
+        })
+    } else {
+        res.sendStatus(403)
+    }
+})
+
+api.get('/:func/', (req,res)=>{
+    var { func } = req.params
+    switch(func) {
+        case '_database':
+            res.sendStatus(200)
+            break
+        case '_mail':
+            break
+        default:
+            res.end()
+            break
+    }
 })
