@@ -198,17 +198,38 @@ em {
 .textbox {
     margin: 1em;
     width: 20em;
-    padding: 1em;
+    padding: 1.25em 1em;
     font-size: 0.85em;
     background-color: #fff;
     transition: all 0.25s ease;
     border: 1.5px solid #aaa;
     border-radius: 0.5em;
-} .textbox:focus{
+    position: relative;
+}
+.textbox .input {
+    border: none;
+    margin: auto 0;
+    width: 100%;
+} .textbox .input:focus {
     outline: none;
-    border: 1.5px solid #666;
-    background-color: #fff;
-} .textbox[class~="error"] {
+}
+.textbox .placeholder {
+    display: none;
+    color: #0051ff;
+    font-size: 0.75em;
+    font-weight: 600;
+    position: absolute;
+    left: 1.25em;
+    top: -1em;
+} .textbox .input:focus ~ .placeholder {
+    display: block;
+    animation: fade 0.5s ease forwards;
+} @keyframes fade {
+    from { opacity: 0; top: -1em;}
+    to { opacity: 1; top: -2px; }
+}
+
+.textbox[class~="error"] {
     color: #d60000;
     border: 1.5px solid #d60000;
 } .textbox[class~="error"]::placeholder {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import $ from 'jquery'
 
 import '../../static/css/Header.css'
@@ -22,8 +23,8 @@ export default class Header extends Component {
             <p className="logo-text">Trociety</p>
           </div>
 
-          <input type="checkbox" id="sidebar-toggle" hidden="true"/>
-          <label for="sidebar-toggle" className="hamburger"><span></span></label>
+          <input type="checkbox" id="sidebar-toggle" hidden={true}/>
+          <label htmlFor="sidebar-toggle" className="hamburger"><span></span></label>
 
           <div className="sidebar">
             <nav className="sidebar-nav">
