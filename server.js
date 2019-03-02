@@ -86,12 +86,12 @@ api.post('/_validate/society', (req,res)=>{
         .limit(1)
         .get()
         .then((querySnapshot)=>{
-            let { sid, ref, name } = querySnapshot.docs[0].data()
+            let { sid, ref, society_name } = querySnapshot.docs[0].data()
             let hmac = crypto.createHmac('sha256', ServerConfig.clientKey).update(sid).digest('hex')
-            res.json({ 
+            res.json({
                 checksum: hmac,
                 data: { 
-                    sid: sid, ref: ref, name: name 
+                    ref: ref, society_name: society_name 
                 }
             })
         })
@@ -104,18 +104,85 @@ api.post('/_validate/society', (req,res)=>{
 })
 
 api.post('/_validate/user', (req,res)=>{
-    let { user_email } = req.body
-    if(user_email!==undefined && user_email!==null) {
-        Database.firestore.collection('users')
-        .where('email', '==', user_email)
+    let { auth_user_email, society_ref } = req.body
+    if(auth_user_email!==undefined && auth_user_email!==null) {
+        Database.firestore.collection('users').doc(society_ref)
+        .collection('_users')
+        .where('email', '==', auth_user_email)
         .limit(1)
         .get()
         .then((querySnapshot)=>{
-            let user_data = querySnapshot.docs[0].data()
-            res.json({ data: user_data })
+            let { user_email, society_ref, isValidated } = querySnapshot.docs[0].data()
+
+            // Get SID by S_REF
+            Database.firestore.collection('societies')
+            .where('ref', '==', society_ref)
+            .limit(1)
+            .get()
+            .then((_querySnapshot)=>{
+                let { sid } = _querySnapshot.docs[0].data()
+                if(!isValidated) {
+                    // Update validated stattus in the users collection
+                    Database.firestore.collection('users').doc(society_ref)
+                    .collection('_users')
+                    .where('email', '==', auth_user_email)
+                    .update({ isValidated: true })
+                    
+                    let gen_uid = ''
+                    // GENERATE  User ID
+                    gen_uid += '@' + society_ref
+
+                    // Add user to auth_users collection
+                    Database.firestore.collection('societies').doc(society_ref)
+                    .collection('auth_users')
+                    .doc(gen_uid)
+                    .set({
+                        uid: gen_uid,
+                        email: user_email,
+                        isValidated: true,
+                        validatedOn: Date.now()
+                    })
+                    .then(()=>{
+                        res.json({ 
+                            hmac: null,
+                            data: {
+                                sid: sid,
+                                uid: gen_uid,
+                                society_ref: society_ref, 
+                                isValidated: true
+                            } 
+                        })
+                    })
+                    .catch(()=>{
+                        res.sendStatus(500)
+                    })
+                } else {
+                    Database.firestore.collection('societies').doc(society_ref)
+                    .collection('auth_users')
+                    .where('email', '==', auth_user_email)
+                    .limit(1)
+                    .get()
+                    .then((__querySnapshot)=>{
+                        let { uid } = __querySnapshot.docs[0].data()
+                        res.json({ 
+                            hmac: null,
+                            data: {
+                                sid: sid,
+                                uid: uid,
+                                society_ref: society_ref,
+                                isValidated: true
+                            }
+                        })
+                    })
+                }
+            })
+            .catch(()=>{
+                res.json({ hmac: null, data: { isValidated: false } })
+            })
         })
         .catch(()=>{
             res.sendStatus(404)
+            // OTP validation here
         })
     } else {
         res.sendStatus(403)
