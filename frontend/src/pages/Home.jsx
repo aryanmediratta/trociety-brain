@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import '../static/css/Home.css'
+
 import Textbox from '../components/Textbox'
 import Button from '../components/Button'
 
@@ -9,23 +11,32 @@ export default class Home extends Component {
       <div>
         <section>
           <div className="hero">
-            <h1>Trociety</h1>
-          </div>
+            <div className="slogan">
+              <h1>New age security,<br/> at your terms</h1>
+              <p>Trociety is the one stop security and survillence solution for you.</p>
+            </div>
 
-          <Textbox type="text" placeholder="Email address" handleChange={(i)=>{ console.log(i) }} required={true}/>
+            <div className="form-container">
+              <div className="onboarding-form">
+                <h2 className="title">Get in Touch</h2>
+                <Textbox type="text" placeholder="Society Name" handleChange={()=>{  }} required={true}/>
+                <Textbox type="text" placeholder="Email address" handleChange={()=>{  }} required={true}/>
+
+                <Button text="Submit"/>
+
+                <p className="terms">By signing up, you agree to the <a href="#">terms</a></p>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <section>
+          <h2>show</h2>
         </section>
 
-        <div>
-          <input className="textbox" type="text" placeholder="Hello"/>
-
-          <button className="button solid">Hello</button>
-
-          <select className="dropdown" defaultValue={1} onChange={this.handleTierChange} passive="true">
-            <option value={0}>Budget</option>
-            <option value={1}>Standard</option>
-            <option value={2}>Premium</option>
-          </select>
-        </div>
+        <section>
+          <h1>Features</h1>
+        </section>
       </div>
     )
   }

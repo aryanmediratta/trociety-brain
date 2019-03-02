@@ -55,16 +55,16 @@ frontend.get('/', (req,res)=>{
     res.sendFile( path.resolve(__dirname, 'frontend', 'build', 'index.html') )
 })
 
-// frontend.post('/_register/society', (req,res)=>{
-//     let { name,
-//     ad_email,
-//     ad_phone,
-//     ad_name,
-//     sc_location,
-//     gates,
-//     vehicles,
-//     info } = req.body
-// })
+frontend.post('/_register/society', (req,res)=>{
+    let { name,
+    ad_email,
+    ad_phone,
+    ad_name,
+    sc_location,
+    gates,
+    vehicles,
+    info } = req.body
+})
 
 // APIs ------------------------------ APIs //
 // ======================================= //
@@ -104,45 +104,41 @@ api.post('/_validate/society', (req,res)=>{
 })
 
 api.post('/_validate/user', (req,res)=>{
-    let { auth_user_email, society_ref } = req.body
+    var { auth_user_email, society_ref } = req.body
     if(auth_user_email!==undefined && auth_user_email!==null) {
         Database.firestore.collection('users').doc(society_ref)
-        .collection('_users')
+        .collection('residents')
         .where('email', '==', auth_user_email)
         .limit(1)
         .get()
-        .then((querySnapshot)=>{
-            let { user_email, society_ref, isValidated } = querySnapshot.docs[0].data()
+        .then((residentQuery)=>{
+            var { email, society_ref, isValidated } = residentQuery.docs[0].data()
 
             // Get SID by S_REF
             Database.firestore.collection('societies')
             .where('ref', '==', society_ref)
             .limit(1)
             .get()
-            .then((_querySnapshot)=>{
-                let { sid } = _querySnapshot.docs[0].data()
+            .then((socQuery)=>{
+                var { sid } = socQuery.docs[0].data()
                 if(!isValidated) {
-                    // Update validated stattus in the users collection
-                    Database.firestore.collection('users').doc(society_ref)
-                    .collection('_users')
-                    .where('email', '==', auth_user_email)
-                    .update({ isValidated: true })
-                    
                     let gen_uid = ''
-                    // GENERATE  User ID
+                    for(let i=0;i<24;i++)
+                        gen_uid += Math.floor( Math.random()*16 ).toString(16)
                     gen_uid += '@' + society_ref
 
-                    // Add user to auth_users collection
-                    Database.firestore.collection('societies').doc(society_ref)
-                    .collection('auth_users')
-                    .doc(gen_uid)
+                    // Add user to auth_users collection                     
+                    Database.firestore.collection('auth_users').doc(gen_uid)
                     .set({
                         uid: gen_uid,
-                        email: user_email,
+                        email: email,
                         isValidated: true,
-                        validatedOn: Date.now()
+                        validatedOn: Date.now(),
+                        ref: society_ref,
+                        registered_vehicles: []
                     })
                     .then(()=>{
+                        console.log('NUNNA')
                         res.json({ 
                             hmac: null,
                             data: {
@@ -162,8 +158,8 @@ api.post('/_validate/user', (req,res)=>{
                     .where('email', '==', auth_user_email)
                     .limit(1)
                     .get()
-                    .then((__querySnapshot)=>{
-                        let { uid } = __querySnapshot.docs[0].data()
+                    .then((authUserQuery)=>{
+                        var { uid } = authUserQuery.docs[0].data()
                         res.json({ 
                             hmac: null,
                             data: {
@@ -188,7 +184,11 @@ api.post('/_validate/user', (req,res)=>{
         res.sendStatus(403)
     }
 })
-    
+
+api.post('/', ()=>{
+
+})
+
 api.get('/:func/', (req,res)=>{
     var { func } = req.params
     switch(func) {
