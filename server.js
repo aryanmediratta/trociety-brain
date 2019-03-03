@@ -56,14 +56,49 @@ frontend.get('/', (req,res)=>{
 })
 
 frontend.post('/_register/society', (req,res)=>{
-    let { name,
-    ad_email,
-    ad_phone,
-    ad_name,
-    sc_location,
-    gates,
-    vehicles,
-    info } = req.body
+    var {
+        address,
+        location,
+        soc_ref,
+        master_email,
+        master_phone,
+        master_name,
+    } = req.body
+
+    let master_key = ''
+    for(let i=0;i<24;i++)
+        master_key += Math.floor( Math.random()*62 ).toString(62)
+    // REPLACE with real crypto ECDH
+
+    Database.firestore.collection('societies')
+    .doc(soc_ref)
+    .set({
+        address: address,
+        location: {
+            _lat: location.split('/')[0],
+            _lon: location.split('/')[1]
+        },
+        isActive: false,
+        isValidated: false,
+        ref: soc_ref,
+        master_email: master_email,
+        master_phone: master_phone,
+        master_name: master_name,
+        master_key: master_key
+    })
+    .then(()=>{
+        Gmailer.SingleDataDelivery({
+            from: 'zrthxn@gmail.com',
+            to: master_email,
+            subject: '',
+        },
+        fs.readFileSync('./util/MailTemplates/onboarding.html').toString(),
+        [
+            {id: 'masterName', data: master_email},
+            {id: 'masterPhone', data: master_phone},
+            {id: 'masterkey', data: master_key},
+        ])
+    })
 })
 
 // APIs ------------------------------ APIs //
@@ -107,7 +142,6 @@ api.post('/_validate/user', (req,res)=>{
     var { auth_user_email, society_ref } = req.body
     if(auth_user_email!==undefined && auth_user_email!==null) {
         Database.firestore.collection('users').doc(society_ref)
-        .collection('residents')
         .where('email', '==', auth_user_email)
         .limit(1)
         .get()

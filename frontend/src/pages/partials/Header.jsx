@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import $ from 'jquery'
 
 import '../../static/css/Header.css'
+import Logo from '../../static/img/logo.svg'
 
 export default class Header extends Component {
   componentDidMount() {
@@ -20,7 +21,7 @@ export default class Header extends Component {
       <header>
         <div className="container">
           <div className="logo">
-            <p className="logo-text">Trociety</p>
+            <img src={ Logo } alt="Trociety" className="logo-text"/>
           </div>
 
           <input type="checkbox" id="sidebar-toggle" hidden={true}/>

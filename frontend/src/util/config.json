@@ -1,0 +1,10 @@
+{
+  "firebase": {
+    "apiKey": "AIzaSyAoYxR-OW8F8Q1uUhlF3YM1dO_Pf7UB0BY",
+    "authDomain": "trociety-db.firebaseapp.com",
+    "databaseURL": "https://trociety-db.firebaseio.com",
+    "projectId": "trociety-db",
+    "storageBucket": "trociety-db.appspot.com",
+    "messagingSenderId": "244693699857"
+  }
+}

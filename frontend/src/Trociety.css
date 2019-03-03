@@ -130,6 +130,9 @@ em {
     outline: none;
 } .button:active {
     background-color: #eee;
+    width: 9.875em;
+    height: 2.875em;
+    margin: 1.0625em;
 }
 
 .solid[class~="button"] {
@@ -244,16 +247,4 @@ em {
     background-color: #fff;
 } .dropdown option {
     border: none;
-}
-
-.form-container {
-    display: flex;
-    flex-flow: column;
-    align-content: center;
-    justify-content: center;
-    background-color: #fff;
-    border-radius: 0.5em;
-    padding: 2.5em 1em;
-    color: #000;
-    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.5)
 }
