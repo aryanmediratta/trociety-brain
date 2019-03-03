@@ -12,6 +12,8 @@ const fileUpload = require('express-fileupload');
 const trociety = express();
 const frontend = express();
 const api = express();
+const cdn = express();
+const engine = express();
 
 const PORT = process.env.PORT || 3000;
 const ServerConfig = require('./config.json');
@@ -31,6 +33,8 @@ trociety.listen(PORT, ()=>{
 trociety.use(vhost(__domain, frontend))
 trociety.use(vhost('www.' +  __domain, frontend))
 trociety.use(vhost('api.' +  __domain, api))
+trociety.use(vhost('cdn.' +  __domain, cdn))
+trociety.use(vhost('engine.' +  __domain, engine))
 
 // ====================================================================================== //
 // ====================================================================================== //
@@ -243,7 +247,11 @@ api.get('/:func/', (req,res)=>{
 engine.post('/_read', (req,res)=>{
     ContentDelivery.Upload(req.files.mediaUpload, 'inputmedia', {})
         .then((fileRef)=>{
-            res.json({ ref: fileRef })
+            Engine.runEngine('http://cdn.trociety.zrthxn.com/d/' + fileRef)
+            .then((res)=>{
+                console.log(res)
+                res.json({ result: res })
+            })
         }).catch((err)=>{
             res.status(403).send(err)
         })
@@ -308,10 +316,6 @@ cdn.get('/d/:fileRef/', (req,res)=>{
 cdn.post('/_upload/', (req,res)=>{
     ContentDelivery.Upload(req.files.fileupload, req.body.filepath, {})
         .then((fileRef)=>{
-            Engine.runEngine('http://cdn.trociety.zrthxn.com/d/' + fileRef)
-            .then((res)=>{
-                console.log(res)
-            })
             res.json({ ref: fileRef })
         }).catch((err)=>{
             res.status(403).send(err)
