@@ -42,11 +42,11 @@ exports.runEngine = (input, contentType) => {
     //     engine.unref()
     // })
 
-    engine.stdout.on('data', (data) => {
-        if(data==='COMPLETE')
-            console.timeEnd('Engine Run')
-        else
-            console.log('ENGINE FAILED')
-        engine.unref()
-    })
+    // engine.stdout.on('data', (data) => {
+    //     if(data==='COMPLETE')
+    //         console.timeEnd('Engine Run')
+    //     else
+    //         console.log('ENGINE FAILED')
+    //     engine.unref()
+    // })
 }
