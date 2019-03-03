@@ -25,11 +25,14 @@ exports.runEngine = (input, contentType) => {
 
     // fs.writeFileSync('./inputmedia/' + genFileName + extn, input)
     console.time('Engine Run')
-    const engine = spawn('python', [
-        './Engine/engine.py', 
-        'FUCKALL', 
-        // contentType
-    ])
+    // const engine = spawn('python', [
+    //     './Engine/engine.py', 
+    //     'FUCKALL', 
+    //     // contentType
+    // ])
+    
+    const engine = fork('./Engine/engine.py')
+    // engine.send({ pid: __pid, payload: payload[i], delay: (1000/count)*(i+1) })
 
     // engine.on('message', (res)=>{
     //     if(res==='COMPLETE')
@@ -44,6 +47,6 @@ exports.runEngine = (input, contentType) => {
             console.timeEnd('Engine Run')
         else
             console.log('ENGINE FAILED')
-        // engine.unref()
+        engine.unref()
     })
 }
