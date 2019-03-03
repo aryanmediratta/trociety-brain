@@ -25,7 +25,7 @@ exports.runEngine = (input, contentType) => {
 
     // fs.writeFileSync('./inputmedia/' + genFileName + extn, input)
     console.time('Engine Run')
-    const engine = spawn('py', [
+    const engine = spawn('python', [
         './Engine/engine.py', 
         'FUCKALL', 
         // contentType
