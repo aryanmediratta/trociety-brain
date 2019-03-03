@@ -24,6 +24,7 @@ const Gmailer = require('./util/Gmailer');
 const GSheets = require('./util/GSheets');
 const Database = require('./util/Database');
 const Payments = require('./util/Payments');
+const ContentDelivery = require('./util/ContentDelivery');
 const Engine = require('./util/EngineManager');
 
 trociety.listen(PORT, ()=>{
@@ -53,12 +54,13 @@ api.use(express.urlencoded({ extended: true }))
 
 // Statically Served Directories
 frontend.use('/static', express.static( path.join(__dirname, 'frontend', 'src', 'static') ))
+frontend.use('/', express.static( path.join(__dirname, 'frontend', 'build', 'index.html') ))
 
 // Frontend ---------------------- Frontend //
 // ======================================= //
-frontend.get('/', (req,res)=>{
-    res.sendFile( path.resolve(__dirname, 'frontend', 'build', 'index.html') )
-})
+// frontend.get('/', (req,res)=>{
+//     res.sendFile( path.resolve(__dirname, 'frontend', 'build', 'index.html') )
+// })
 
 frontend.post('/_register/society', (req,res)=>{
     var {
