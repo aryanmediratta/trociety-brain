@@ -31,7 +31,7 @@ exports.runEngine = (input, contentType) => {
     //     // contentType
     // ])
     
-    const engine = fork('./Engine/engine.py')
+    const engine = fork('./util/Engine/engine.py')
     // engine.send({ pid: __pid, payload: payload[i], delay: (1000/count)*(i+1) })
 
     // engine.on('message', (res)=>{
