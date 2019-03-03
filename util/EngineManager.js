@@ -31,8 +31,16 @@ exports.runEngine = (input, contentType) => {
         // contentType
     ])
 
-    engine.on('message', (res)=>{
-        if(res==='COMPLETE')
+    // engine.on('message', (res)=>{
+    //     if(res==='COMPLETE')
+    //         console.timeEnd('Engine Run')
+    //     else
+    //         console.log('ENGINE FAILED')
+    //     engine.unref()
+    // })
+
+    engine.stdout.on('data', (data) => {
+        if(data==='COMPLETE')
             console.timeEnd('Engine Run')
         else
             console.log('ENGINE FAILED')
