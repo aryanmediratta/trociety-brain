@@ -22,6 +22,7 @@ const Gmailer = require('./util/Gmailer');
 const GSheets = require('./util/GSheets');
 const Database = require('./util/Database');
 const Payments = require('./util/Payments');
+const Engine = require('./util/EngineManager');
 
 trociety.listen(PORT, ()=>{
     console.log('Listening')
@@ -235,4 +236,84 @@ api.get('/:func/', (req,res)=>{
             res.end()
             break
     }
+})
+
+// ================================================================== //
+
+engine.post('/_read', (req,res)=>{
+    ContentDelivery.Upload(req.files.mediaUpload, 'inputmedia', {})
+        .then((fileRef)=>{
+            res.json({ ref: fileRef })
+        }).catch((err)=>{
+            res.status(403).send(err)
+        })
+})
+
+// ================================================================== //
+
+cdn.get('/', (req,res)=>{
+    let _token = 'LOGIN_NOT_VALIDATED'
+    if(req.cookies['_x-key']!==undefined)
+        _token = crypto.createHmac('sha512', ServerConfig.clientKey).update(req.cookies['_x-key']).digest('hex')
+    else res.sendFile( path.resolve(__dirname, 'cdn', 'index.html') )
+
+    Database.database.ref('cdn_login/' + req.cookies['_x-key']).once('value', (snap)=>{
+        if(((new Date(Date.now())) - snap.val().valTime) < 300000) {
+            if(req.cookies['_x-cdn']===_token)
+                res.sendFile( path.resolve(__dirname, 'cdn', 'cdn.html') )
+            else throw 'LOGIN_NOT_VALIDATED'
+        } else
+            res.sendFile( path.resolve(__dirname, 'cdn', 'index.html') )
+    }).catch(()=>{
+        res.sendFile( path.resolve(__dirname, 'cdn', 'index.html') )
+    })
+})
+
+cdn.get('/login', (req,res)=>{
+    res.sendFile( path.resolve(__dirname, 'cdn', 'login.html') )
+})
+
+cdn.post('/login', (req,res)=>{
+    // Login Authorzation
+    let { password } = req.body
+    if(password === 'trociety') {
+        let key = 'xcdn'
+        for(let i=0; i<12; i++)
+            key += Math.floor( Math.random() * 16 ).toString(16)
+        let token = crypto.createHmac('sha512', ServerConfig.clientKey).update(key).digest('hex')
+        res.cookie( '_x-key', key, { expires: new Date(Date.now() + 300000) } )
+        res.cookie( '_x-cdn', token, { expires: new Date(Date.now() + 300000) } )
+        Database.database.ref('cdn_login/' + key).set({
+            "key": key,
+            "token": token,
+            "valTime": (new Date(Date.now()))
+        })
+        res.redirect('/')
+    } else {
+        res.send(403)
+    }
+})
+
+cdn.get('/d/:fileRef/', (req,res)=>{
+    ContentDelivery.Lookup(req.params.fileRef)
+        .then(({ filepath, filename, originalName, contentType })=>{
+            res.type(contentType)
+            res.sendFile( path.join(__dirname, 'cdn', filepath, filename) )
+        }).catch((result, err)=>{
+            console.error(result, err)
+            res.sendStatus(500)
+        })
+})
+
+cdn.post('/_upload/', (req,res)=>{
+    ContentDelivery.Upload(req.files.fileupload, req.body.filepath, {})
+        .then((fileRef)=>{
+            Engine.runEngine('http://cdn.trociety.zrthxn.com/d/' + fileRef)
+            .then((res)=>{
+                console.log(res)
+            })
+            res.json({ ref: fileRef })
+        }).catch((err)=>{
+            res.status(403).send(err)
+        })
 })

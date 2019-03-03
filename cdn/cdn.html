@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>CDN Admin Panel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="https://xtacy.org/static/css/Global.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="https://xtacy.org/static/css/Header.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="https://xtacy.org/static/css/Footer.css">
+</head>
+<body>
+
+    <header>
+        <!-- Page Header -->
+        <div class="container">
+            <div class="logo">
+                <p class="logo-text"><a href="/" class = "logo-text">Trociety</a></p>
+            </div>
+    
+            <input type="checkbox" id="sidebar-toggle" hidden="true">
+            <label for="sidebar-toggle" class="hamburger"><span></span></label>
+    
+            <!-- Mobile Navigation Sidebar -->
+            <div class="sidebar">
+                <nav class="sidebar-nav">
+                    <ul>
+                        <li><a href="/">home</a></li>
+                        <li><a href="/about">about</a></li>
+                        <li><a href="/contact">contact</a></li>
+                        <li><a href="/signup">register</a></li>
+                    </ul>
+                </nav>
+                <div class="accent"></div>
+            </div>
+            <div class="sidebar-shadow" id="sidebar-shadow"></div>
+            
+            <!-- Desktop Navigation Menu -->
+            <nav class="desktop-nav">
+                <ul>
+                    <li><a href="/">home</a></li>
+                    <li><a href="/about">about</a></li>
+                    <li><a href="/contact">contact</a></li>
+                    <li class="highlight"><a href="/signup" class="highlight">register</a></li>
+                </ul>
+            </nav>
+        </div>
+    
+        <script>
+            document.getElementById("sidebar-shadow").onclick = () => {
+                document.getElementById("sidebar-toggle").checked = false;
+            }
+        </script>
+        <!-- End Page Header -->
+    </header>
+
+    <!---------- ====  MAIN PAGE CONTENT  ==== ---------->
+
+    <section>
+        <div class="container upper">
+            <h2><b>Content Server</b></h2>
+            <h3>Admin Panel</h3>
+            
+            <button class="button solid small" id="logout">LOGOUT</button>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <!-- Tab links -->
+            <div class="tab">
+                <button class="tablinks" onclick="openTab(event, 'upload')">Upload</button>
+                <button class="tablinks" onclick="openTab(event, 'lookup')">CDN Lookup</button>
+            </div>
+        
+            <!-- Tab content -->
+            <div id="upload" class="tabcontent">
+                <h3>Upload</h3>
+                <form action="/_upload" method="POST" encType="multipart/form-data">
+                    <input type="text" name="filepath" placeholder="path">
+                    <input type="file" name="mediaUpload">
+                    <input type="submit" class="button solid" id="upload" value="UPLOAD"></input>
+                </form>
+            </div>
+            
+            <div id="lookup" class="tabcontent">
+                <h3>CDN Lookup</h3>
+                <p>Add the functionality to modify the CDN Lookup table here</p> 
+            </div>
+        </div>
+    </section>
+
+    <!---------- ====  END PAGE CONTENT  ==== ---------->
+
+    <script>
+        document.getElementById("logout").onclick = () => {
+            document.cookie = "_x-key=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            document.cookie = "_x-cdn=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            window.location = '/';
+        }
+
+        // document.getElementById("upload").onclick = () => {
+        //     var fileUploadForm = new FormData();
+        //     fileUploadForm.append('fileupload', document.getElementById("fileupload").files[0]);
+
+        //     const upload = new XMLHttpRequest();
+        //     upload.open('POST', '/u/' + btoa('root') + '/' + 'filename.txt', true);
+        //     upload.setRequestHeader('Content-Type','multipart/form-data');
+        //     upload.send(fileUploadForm);
+
+        //     upload.addEventListener('progress', (e) => {
+        //         let done = e.position || e.loaded, total = e.totalSize || e.total;
+        //         console.log('upload progress: ' + (Math.floor(done/total*1000)/10) + '%');
+        //     }, false);
+        //     if ( upload.upload ) {
+        //         upload.upload.onprogress = function(e) {
+        //             var done = e.position || e.loaded, total = e.totalSize || e.total;
+        //             console.log('upload.upload progress: ' + done + ' / ' + total + ' = ' + (Math.floor(done/total*1000)/10) + '%');
+        //         };
+        //     }
+        //     upload.onreadystatechange = (e) => {
+        //         if (upload.readyState===4 && upload.status===200) {
+        //             console.log(['upload upload complete', e]);
+        //         }
+        //     };
+        // }
+
+        function openTab(event, tabId) {
+            var tabcontent, tablinks;
+
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for(let i=0; i<tabcontent.length; i++)
+                tabcontent[i].style.display = "none";
+
+            tablinks = document.getElementsByClassName("tablinks");
+            for(let i=0; i<tablinks.length; i++)
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+
+            document.getElementById(tabId).style.display = "block";
+            event.currentTarget.className += " active";
+        }
+    </script>
+
+    <style>
+        .upper {
+            text-align: left;
+        }
+
+        .tab {
+            overflow: hidden;
+            border-bottom: 1px solid #ccc;
+        }
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 2em;
+            transition: 0.3s;
+        } .tab button:hover {
+            background-color: #ddd; 
+        } .tab button.active {
+            background-color: #ccc;
+        }
+
+        .tabcontent {
+            display: none;
+            padding: 1em 2em;
+            border: 1px solid #ccc;
+            border-top: none;
+        }
+    </style>
+</body>
+</html>

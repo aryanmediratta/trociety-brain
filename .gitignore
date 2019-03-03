@@ -33,5 +33,7 @@ typings/
 
 
 # production
-
 /frontend/build
+
+# CDN
+/cdn/cdnLookup.json
