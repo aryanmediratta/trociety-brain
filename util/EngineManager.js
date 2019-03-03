@@ -4,35 +4,58 @@ const cluster = require('cluster')
 const request = require('request')
 const alpr = require("node-openalpr")
 const {spawn, fork, exec} = require('child_process')
+const Database = require('./Database')
 
 exports.runEngine = (input, contentType) => {
-    let genFileName = 'med_', extn, filepath
+    // let genFileName = 'med_', extn, filepath
 
-    for(let i=0;i<20;i++)
-        genFileName += Math.floor( Math.random()*16 ).toString(16)
+    // for(let i=0;i<20;i++)
+    //     genFileName += Math.floor( Math.random()*16 ).toString(16)
     
-    switch(contentType) {
-        case 'image/jpeg':
-            extn = '.jpeg'
-            break
-        case 'image/png':
-            extn = '.png'
-            break
-        case '':
-            extn = '.mp4'
-            break
-        default: 
-            extn = ''
-    }
+    // switch(contentType) {
+    //     case 'image/jpeg':
+    //         extn = '.jpeg'
+    //         break
+    //     case 'image/png':
+    //         extn = '.png'
+    //         break
+    //     case '':
+    //         extn = '.mp4'
+    //         break
+    //     default: 
+    //         extn = ''
+    // }
 
-    filepath = __dirname + '/inputmedia/' + genFileName + extn
-    fs.writeFileSync(filepath, input)
-    console.time('Engine Run')
-    const engine = spawn('python', [
-        './Engine/engine.py', 
-        'FUCKALL', 
-        // contentType
-    ])
+    // filepath = __dirname + '/inputmedia/' + genFileName + extn
+    // fs.writeFileSync(filepath, input)
+    // console.time('Engine Run')
+    // const engine = spawn('python', [
+    //     './Engine/engine.py', 
+    //     'FUCKALL', 
+    //     // contentType
+    // ])
+
+    // DL9CM3884
+    let read_plate = 'DL9CM3884'
+
+    Database.firestore.collection('vechicles')
+    .where('numberPlate', '==', read_plate)
+    .get()
+    .then((notifQuery)=>{
+        let { notifId, isInside } = notifQuery.docs[0].data()
+        let vehicleDocKey = notifQuery.docs[0].id
+
+        // Change state of the vehicle
+        Database.firestore.collection('vehicles')
+        .doc(vehicleDocKey)
+        .update({
+            isInside: !isInside
+        })
+        .then(()=>{
+            // Firebase Admin Notif 
+            console.log('NOTIF')
+        })
+    })
 
     // const engine = exec('python', [
     //     './Engine/engine.py', 
@@ -62,7 +85,7 @@ exports.runEngine = (input, contentType) => {
 }
 
 exports.run = () => {
-
+    
 }
 
 exports.TestAPI = () => {
@@ -73,10 +96,6 @@ exports.TestAPI = () => {
 
     console.log(alpr.IdentifyLicense(path, function (error, output) {
         var results = output.results
-        console.log (id +" "+ output.processing_time_ms +" "+ ((results.length > 0) ? results[0].plate : "No results"))
-    
-        if (id == 349) {
-            console.log (alpr.Stop ())
-        }
+        console.log (output.processing_time_ms +" "+ ((results.length > 0) ? results[0].plate : "No results"))
     }))
 }

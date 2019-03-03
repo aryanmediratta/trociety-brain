@@ -1,6 +1,6 @@
 .hero {
     background: linear-gradient(#0070ff, #0051ff);
-    background-image: url('../img/webpage_bgvideo.mp4');
+    /* background-image: url('../img/webpage_bgvideo.mp4'); */
     background-repeat: no-repeat;
     background-size: cover; 
     background-blend-mode: hard-light;
