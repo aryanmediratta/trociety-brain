@@ -1,7 +1,7 @@
 const os = require('os')
 const fs = require('fs')
 const cluster = require('cluster')
-const {spawn, fork} = require('child_process')
+const {spawn, fork, exec} = require('child_process')
 
 exports.runEngine = (input, contentType) => {
     let genFileName = 'med_', extn
@@ -30,8 +30,15 @@ exports.runEngine = (input, contentType) => {
     //     'FUCKALL', 
     //     // contentType
     // ])
+
+    const engine = exec('python', [
+        './Engine/engine.py', 
+        'FUCKALL', 
+        // contentType
+    ])
     
-    const engine = fork('./util/Engine/engine.py')
+    // const engine = exe
+    // fork('./util/Engine/engine.py')
     // engine.send({ pid: __pid, payload: payload[i], delay: (1000/count)*(i+1) })
 
     // engine.on('message', (res)=>{
