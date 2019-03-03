@@ -44,6 +44,6 @@ exports.runEngine = (input, contentType) => {
             console.timeEnd('Engine Run')
         else
             console.log('ENGINE FAILED')
-        engine.unref()
+        // engine.unref()
     })
 }
