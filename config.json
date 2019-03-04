@@ -3,13 +3,11 @@
   "env": "dev",
   "ServerState": "NORMAL",
   "domain": "trociety.zrthxn.com",
-  "csrfTokenName": "_xta_srf-tk:",
-  "csrfTokenNameKey": "_tk_nmk-del",
-  "clientKeyPlaintext": "cLi#ntK3y@xTacy&org",
-  "clientKey": "29e08c47ff8a12ad6885fcb1ca99568b0016c541c5657c7956b0a4159fc3c4f1",
+  "clientKeyPlaintext": "__required__",
+  "clientKey": "__required__",
   "Sheets": {
     "spreadsheets": {
-      "repository": "1G_yHB9loHd31zoEa1YHZvmiG731HdVRJHtSKfDSMUAI"
+      "repository": "__required__"
     }
   },
   "Gmail": {
@@ -25,32 +23,14 @@
   "payments": {
     "env": "sandbox",
     "sandbox": {
-      "API_KEY": "test_eac399e665246c6d7b6f21dc34a", 
-      "AUTH_TOKEN": "test_2e9abbeb69a1c515e5eaa6bd1dc" 
+      "API_KEY": "__required__", 
+      "AUTH_TOKEN": "__required__" 
     }, 
     "live": {
       "API_KEY": "",
       "AUTH_TOKEN": ""
     }
   },
-  "firebase": {
-    "apiKey": "AIzaSyAoYxR-OW8F8Q1uUhlF3YM1dO_Pf7UB0BY",
-    "authDomain": "trociety-db.firebaseapp.com",
-    "databaseURL": "https://trociety-db.firebaseio.com",
-    "projectId": "trociety-db",
-    "storageBucket": "trociety-db.appspot.com",
-    "messagingSenderId": "244693699857"
-  },
-  "firebaseAdmin" : {
-    "type": "service_account",
-    "project_id": "trociety-db",
-    "private_key_id": "98b8732644ab3afb2d6119cf7c6112d160e34c4e",
-    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCne9EhkturI7XE\n6wstRYDSIlG2oRmpgxMLyvp0aK+j14T8gU2/b2c+3eQEjOjemzMfmkaVj49GXKp8\nOoS8bYRkF41qypEuSo7LvZ8qg2ssjjb3PjwOwkxhSdicxNT2DEkCMdUigTA6QRXj\n7G7zq81X2bqS3aS5YXoicJElr20IPU2c1LUU7PuE0SOJbbfcTucu1LbcdAV61jra\n3jWTPimY2ha54rfwLQA2WokGEc8zMPrSWnIC+cmWZOuV9caRcjVGT5SjYPamLeAm\n3wS1onCdoka5GkthJTB0wbTC31tAzdtpMK0DLAAh/oILMW/bercSzvHgY981Lfem\nO6zHiuNPAgMBAAECggEAJ/1IUdve114PaJU2dfjCaWoIWLLejbreMVKlumXEijpL\nZn75MVxIKpqQdwWuFHi6HDGZ6Nv+Oa6mhkLyror3sW5uNbFoOMVUkxETj/MRA/Jw\n7VfOvzdlRVV8gvH8Z0NHq156pWJzQXWI5ILvev7qaK9z/N0vF5ROtSprfbQFNJIL\ns7S9nE3abmF2FSTCbfRejPrYohvyG+KhGKUtY9I57aIwzffeFGpVLfD/CJf48Rkw\nySp20aVD6buoU/wX4Yk1PCu4uvgjetRdiYzHnxKcMmsyGNMa2b4g2XNX/1apFBz2\nbeg4IqcqpQaOD5N4BOcHETSpo+AdZUdfm9ujeCoSAQKBgQDQjnXHcXzzm0PpWHTm\nw2q2C9ZY65Wot5iuFdfTUqWtYpKm5SsEsYzGmohfBdTZhDpPHSB+T+hNh/eN0wAF\n8KwMqW2laTZlPUWbkpxLuNlbWpNcJ1hnHQbKBxjqgX4tN1wXBuHd0DvyRZjTq4+z\n8nZfYRhGfr552ULZ4bNQv8DSZwKBgQDNlW5ZukjrLjMb+yJQAXvOsX+Ve8mdSff4\nsQdVBGW9p2wbzcUdUVW6hTVri6QRSA64wd5WLzS7KBYquXbd+9koAFXQOu/1nWR3\nZPmsOqenw7j8TZ1yc9+qn5Yudw/lnYBAzaapU+5EG3YfF1yBZq0+Kz1MOSz3VQjg\ndps3lXDm2QKBgEkQn9Kvv8bYroIhq1LtQ4VjwESGxHfHWoYiwOoYGlMUJayyvM94\nJImvufcQY/GQkZ0F50xZUllXOTNGqMtr9dq5wOAibBwryyclxfwBVqTapqWyYxY8\n5RQCSIhftYTB0FGA58B+I4JNP61ofX/dgfsIWSjZXoHxy6npmJjBlRwhAoGAAJIn\nqkwgI7cPIUbDQ6GdbGeFyS580tj/vUsQkCXg+nPakwExSPGO4WO5UEElBX9DuzOe\noHKlHNfxp9C4CcnHQpstodRoEjCLtOEs6FOJX6flfZ3hkA3OUzT6P8rI2oRjdMqd\nad73zGyfGVsBQMK+PGv2UZ3fCBjOW4E40SCzHZECgYBkLR8s4Q0/j9vCqo1w46Gj\ngtQ7Fx91QIONDLYAVVOw9cFpaN/FPZ8YTECAPOWCcwu0wStc/jn2vRPDTP7LjESM\nE6+zumvxm/dSKPHu8Rrq4jITHoSL+WiwFeE5+BCaGjAcTiRbMuVvBbXsYY7VO/Rr\n5njlPmNhIVg9Wslmp2nJEA==\n-----END PRIVATE KEY-----\n",
-    "client_email": "firebase-adminsdk-p4vth@trociety-db.iam.gserviceaccount.com",
-    "client_id": "116978073609019078016",
-    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-    "token_uri": "https://oauth2.googleapis.com/token",
-    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-p4vth%40trociety-db.iam.gserviceaccount.com"
-  }
+  "firebase": {},
+  "firebaseAdmin" : {}
 }
